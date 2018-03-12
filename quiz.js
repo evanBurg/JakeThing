@@ -9,7 +9,8 @@ $(document).ready(function(){
 				'C': 'Answer C',
 				'D': 'Answer D',
 			},
-	}
+		},
+	};
 	
 	$.each(questionsJson, function(index, element){
 		$('#questionsContainer').append('<div class="question-canvas">' +
@@ -17,9 +18,9 @@ $(document).ready(function(){
 			'<p>' + element.body + '</p>');
 			$.each(element.answers, function(indexA, elementA){
 				$('#questionsContainer').append(
-				'<span>'+ elementA +'</span>'
-				'<input type="radio" name="radio-'+index+'">'
-			)};
+				'<span>'+ elementA +'</span>' +
+				'<input type="radio" name="radio-'+index+'">');
+			});
 	});	
 	$('#questionsContainer').append('</div');
 	
