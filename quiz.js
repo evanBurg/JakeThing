@@ -7,10 +7,22 @@ $(document).ready(function(){
 				'A': 'Answer A',
 				'B': 'Answer B',
 				'C': 'Answer C',
-				'D': 'Answer D',
+				'D': 'Answer D'
 			},
+			correct: "A"
 		},
-	};
+		"questionTwo": {
+            title: "This is my second question",
+            body: "This is my second question",
+            answers: {
+                'A': 'Answer A',
+                'B': 'Answer B',
+                'C': 'Answer C',
+                'D': 'Answer D'
+            },
+            correct: "A"
+        },
+		};
 	
 	$.each(questionsJson, function(index, element){
 		$('#questionsContainer').append('<div class="question-canvas">' +
