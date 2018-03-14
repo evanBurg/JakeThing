@@ -55,22 +55,28 @@ jQuery(document).ready(function(){
 	};
 
     var htmlString = '';
+    var htmlString2 = '';
     var currentQuestion = null;
 	jQuery.each(questionsJson, function(questionIndex, question){
 
         htmlString += ('<div class="question-canvas" id="question-'+ questionIndex +'" data-correct="'+ question.correct +'" style="display: none">' +
-			'<h3>' + question.title + '</h3>' +
+			'<h3>' + question.title.toUpperCase() + '</h3>' +
 			'<p>' + question.body + '</p>');
 			jQuery.each(question.answers, function(answerIndex, answer){
                 htmlString += (
-				'<span>'+ answer +'</span>' +
-				'<input type="radio" class="question-select" name="radio-'+questionIndex+'" data-answer-id="'+answerIndex+'" data-question-id="'+ questionIndex +'">');
+				'<div>' +
+				    '<input type="radio" class="question-select" name="radio-'+questionIndex+'" data-answer-id="'+answerIndex+'" data-question-id="'+ questionIndex +'">' +
+                    '<span>'+ answer +'</span>' +
+                '</div>');
 			});
-        htmlString += ('</div>'+
-			'<div id="question-feedback-'+ questionIndex +'" style="display: none"><h4>Hint:</h4><p>'+ question.feedback +'</p></div>' +
-			'<div id="question-correct-'+ questionIndex +'" style="display: none"><h4>Correct:</h4><p>'+ question.reward +'</p></div>');
+        htmlString2 += (
+			'<div id="question-feedback-'+ questionIndex +'" class="feedback-notification"  style="display: none"><h4>Hint:</h4><p>'+ question.feedback +'</p></div>' +
+			'<div id="question-correct-'+ questionIndex +'" class="correct-notification" style="display: none"><h4>Correct:</h4><p>'+ question.reward +'</p></div>'
+        );
+        htmlString += '</div>';
 	});
 	jQuery('#questionsContainer').html(htmlString);
+	jQuery('#feedbackContainer').html(htmlString2);
 
 
     jQuery("#question-1").fadeIn();
@@ -100,17 +106,13 @@ jQuery(document).ready(function(){
         jQuery('#last').attr('data-page', parseInt(question)-1);
 		jQuery('#next').attr('data-page', parseInt(question)+1);
 		if(parseInt(question)-1 < 1){
-            jQuery('#last').hide();
             jQuery('#last').prop('disabled', true);
 		}else{
-            jQuery('#last').fadeIn();
             jQuery('#last').prop('disabled', false);
 		}
         if(parseInt(question)+1 > Object.keys(questionsJson).length){
-            jQuery('#next').hide();
             jQuery('#next').prop('disabled', true);
         }else{
-            jQuery('#next').fadeIn();
             jQuery('#next').prop('disabled', false);
         }
 		currentQuestion = question;
