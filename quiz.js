@@ -59,15 +59,16 @@ jQuery(document).ready(function(){
     var currentQuestion = null;
 	jQuery.each(questionsJson, function(questionIndex, question){
 
-        htmlString += ('<div class="question-canvas" id="question-'+ questionIndex +'" data-correct="'+ question.correct +'" style="display: none">' +
-			'<h3>' + question.title.toUpperCase() + '</h3>' +
-			'<p>' + question.body + '</p>');
-			jQuery.each(question.answers, function(answerIndex, answer){
+        htmlString += (
+            '<div class="question-canvas" id="question-'+ questionIndex +'" data-correct="'+ question.correct +'" style="display: none">' +
+                '<h3>' + question.title.toUpperCase() + '</h3>' +
+                '<p>' + question.body + '</p>');
+            jQuery.each(question.answers, function(answerIndex, answer){
                 htmlString += (
-				'<div>' +
-				    '<input type="radio" class="question-select" name="radio-'+questionIndex+'" data-answer-id="'+answerIndex+'" data-question-id="'+ questionIndex +'">' +
-                    '<span>'+ answer +'</span>' +
-                '</div>');
+                    '<div>' +
+                        '<input type="radio" class="question-select" name="radio-'+questionIndex+'" data-answer-id="'+answerIndex+'" data-question-id="'+ questionIndex +'">' +
+                        '<span>'+ answer +'</span>' +
+                    '</div>');
 			});
         htmlString2 += (
 			'<div id="question-feedback-'+ questionIndex +'" class="feedback-notification"  style="display: none"><h4>Hint:</h4><p>'+ question.feedback +'</p></div>' +
@@ -103,17 +104,19 @@ jQuery(document).ready(function(){
 		var question = jQuery(event.target).closest('button').attr('data-page');
         hideAllHints();
         jQuery("#question-"+question).fadeIn();
-        jQuery('#last').attr('data-page', parseInt(question)-1);
-		jQuery('#next').attr('data-page', parseInt(question)+1);
+        var last = jQuery('#last');
+        var next = jQuery('#next');
+        last.attr('data-page', parseInt(question)-1);
+        next.attr('data-page', parseInt(question)+1);
 		if(parseInt(question)-1 < 1){
-            jQuery('#last').prop('disabled', true);
+            last.prop('disabled', true);
 		}else{
-            jQuery('#last').prop('disabled', false);
+            last.prop('disabled', false);
 		}
         if(parseInt(question)+1 > Object.keys(questionsJson).length){
-            jQuery('#next').prop('disabled', true);
+            next.prop('disabled', true);
         }else{
-            jQuery('#next').prop('disabled', false);
+            next.prop('disabled', false);
         }
 		currentQuestion = question;
 	});
